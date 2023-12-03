@@ -1,0 +1,15 @@
+{
+    "hover.floatConfig": { "border": true, "rounded": true, "focusable": true },
+    "suggest.floatConfig": { "border": true, "rounded": true },
+    "diagnostic.floatConfig": { "border": true, "rounded": true },
+    "signature.floatConfig": { "border": true, "rounded": true },
+
+    "pairs.enableCharacters": ["(", "[", "{", "'", "\"", "`"],
+    "pairs.enableBackspace": true,
+
+	"suggest.noselect": true,
+    
+    "clangd.compilationDatabaseCandidates": ["${workspaceFolder}"],
+
+    "translator.engines": ["youdao"]
+}
