@@ -2,5 +2,4 @@ source $ZDOTDIR/envs.zsh
 source $ZDOTDIR/aliases.zsh
 source $ZDOTDIR/omz.zsh
 source $ZDOTDIR/proxy.zsh
-source $ZDOTDIR/wsl.zsh
 source $ZDOTDIR/conda.zsh

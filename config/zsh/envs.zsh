@@ -58,11 +58,14 @@ export WGETRC=${XDG_CONFIG_HOME}/wget/wgetrc
 # qt
 # export QT_DEBUG_PLUGINS=1 # qt debug模式，显示更多报错信息
 
-# LD_LIBRARY_PATH
-# export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-
 # PATH
 _ruby="$XDG_DATA_HOME/gem/ruby/3.0.0/bin"  # 加上 ruby 环境
 _local_bin="$HOME/.local/bin"
-export PATH="$PATH:$GOBIN:$_ruby:$_local_bin:$_local_bin/myscript"
-unset _ruby _local_bin
+_cuda_bin="/usr/local/cuda/bin"
+export PATH="$GOBIN:$_ruby:$_local_bin:$_local_bin:$_cuda_bin/myscript:$PATH"
+unset _ruby _local_bin _cuda_bin
+
+# LD_LIBRARY_PATH
+_cuda_lib="/usr/local/cuda/lib64"
+export LD_LIBRARY_PATH=$_cuda_lib:$LD_LIBRARY_PATH
+unset _cuda_lib
