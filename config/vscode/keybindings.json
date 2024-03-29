@@ -1,0 +1,303 @@
+[
+    // 补全设置
+    {
+        "key": "tab",
+        "command": "selectNextSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    {
+        "key": "shift+tab",
+        "command": "selectPrevSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    // 切换窗口
+    {
+        "key": "pageUp",
+        "command": "workbench.action.previousEditor",
+    },
+    {
+        "key": "pageDown",
+        "command": "workbench.action.nextEditor",
+    },
+    {
+        "key": "shift+pageUp",
+        "command": "workbench.action.moveEditorLeftInGroup",
+    },
+    {
+        "key": "shift+pageDown",
+        "command": "workbench.action.moveEditorRightInGroup",
+    },
+    // 侧边栏
+    {
+        "key": "ctrl+h",
+        "command": "extension.multiCommand.execute",
+        "args": {
+            "sequence": [
+                "workbench.action.toggleSidebarVisibility",
+                "workbench.action.focusSideBar",
+            ]
+        },
+        "when": "!sideBarVisible"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.focusSideBar",
+        "when": "sideBarVisible && !sideBarFocus"
+    },
+    {
+        "key": "ctrl+shift+b",
+        "command": "workbench.action.toggleActivityBarVisibility",
+    },
+    {
+        "key": "pageDown",
+        "command": "workbench.action.nextSideBarView",
+        "when": "sideBarFocus"
+    },
+    {
+        "key": "pageUp",
+        "command": "workbench.action.previousSideBarView",
+        "when": "sideBarFocus"
+    },
+    // 终端
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active",
+    },
+    // 聚焦转移
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "sideBarFocus",
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarFocus",
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.focusRightGroup",
+        "when": "editorFocus",
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.focusLeftGroup",
+        "when": "editorFocus && activeEditorGroupIndex != 1"
+    },
+    // notebook 快捷键设置
+    {
+        "key": "c",
+        "command": "notebook.cell.changeToCode",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused && activeEditor == 'workbench.editor.notebook' && notebookCellType == 'markup'"
+    },
+    {
+        "key": "y",
+        "command": "notebook.cell.copy",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused"
+    },
+    {
+        "key": "i",
+        "command": "notebook.cell.edit",
+        "when": "notebookCellListFocused && notebookEditable && !inputFocus"
+    },
+    {
+        "key": "p",
+        "command": "notebook.cell.paste",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused"
+    },
+    {
+        "key": "u",
+        "command": "undo",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused"
+    },
+    {
+        "key": "escape",
+        "command": "notebook.cell.quitEdit",
+        "when": "inputFocus && notebookEditorFocused && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible && neovim.init && neovim.mode == 'normal'"
+    },
+    // 编辑
+    {
+        "key": "ctrl+x",
+        "command": "editor.action.clipboardCutAction",
+        "when": "editorTextFocus &&  neovim.init && neovim.mode == 'insert'"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "editor.action.clipboardCopyAction",
+        "when": "editorTextFocus &&  neovim.init && neovim.mode == 'insert'"
+    },
+    // 查找和替换
+    // 文件管理
+    {
+        "key": "r",
+        "command": "renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "d",
+        "command": "deleteFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "y",
+        "command": "filesExplorer.copy",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+    },
+    {
+        "key": "x",
+        "command": "filesExplorer.cut",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+    },
+    {
+        "key": "p",
+        "command": "filesExplorer.paste",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "v",
+        "command": "explorer.openToSide",
+        "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
+    },
+    {
+        "key": "a",
+        "command": "explorer.newFile",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "shift+a",
+        "command": "explorer.newFolder",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
+    // 禁用的快捷键
+    {
+        "key": "ctrl+x",
+        "command": "-editor.action.clipboardCutAction"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "-editor.action.clipboardCopyAction"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "-vscode-neovim.send",
+        "when": "editorTextFocus && neovim.ctrlKeysNormal && neovim.init && neovim.mode != 'insert'"
+    },
+    {
+        "key": "ctrl+[",
+        "command": "-vscode-neovim.escape",
+        "when": "editorTextFocus && neovim.init"
+    },
+    {
+        "key": "enter",
+        "command": "-editor.action.nextMatchFindAction",
+        "when": "editorFocus && findInputFocussed"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "-editor.action.startFindReplaceAction",
+        "when": "editorFocus || editorIsOpen"
+    },
+    {
+        "key": "enter",
+        "command": "-notebook.cell.edit",
+        "when": "notebookCellListFocused && notebookEditable && !inputFocus"
+    },
+    {
+        "key": "z",
+        "command": "-undo",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused"
+    },
+    {
+        "key": "v",
+        "command": "-notebook.cell.paste",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused"
+    },
+    {
+        "key": "c",
+        "command": "-notebook.cell.copy",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused"
+    },
+    {
+        "key": "y",
+        "command": "-notebook.cell.changeToCode",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused && activeEditor == 'workbench.editor.notebook' && notebookCellType == 'markup'"
+    },
+    {
+        "key": "ctrl+k ctrl+right",
+        "command": "-workbench.action.focusRightGroup"
+    },
+    {
+        "key": "ctrl+k ctrl+left",
+        "command": "-workbench.action.focusLeftGroup"
+    },
+    {
+        "key": "ctrl+`",
+        "command": "-workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "-workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "-workbench.view.search",
+        "when": "workbench.view.search.active && neverMatch =~ /doesNotMatch/"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "-workbench.action.findInFiles"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "-workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "ctrl+shift+x",
+        "command": "-workbench.view.extensions",
+        "when": "viewContainer.workbench.view.extensions.enabled"
+    },
+    {
+        "key": "ctrl+pageup",
+        "command": "-workbench.action.previousEditor"
+    },
+    {
+        "key": "ctrl+pagedown",
+        "command": "-workbench.action.nextEditor"
+    },
+    {
+        "key": "ctrl+shift+pageup",
+        "command": "-workbench.action.moveEditorLeftInGroup"
+    },
+    {
+        "key": "ctrl+shift+pagedown",
+        "command": "-workbench.action.moveEditorRightInGroup"
+    },
+    {
+        "key": "ctrl+v",
+        "command": "-editor.action.clipboardPasteAction"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "-extension.vim_ctrl+c",
+        "when": "editorTextFocus && vim.active && vim.overrideCtrlC && vim.use<C-c> && !inDebugRepl"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "-editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+]
