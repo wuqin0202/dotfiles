@@ -1,0 +1,13 @@
+[Unit]
+Description=WiFi Reconnect Service
+After=network-online.target
+
+[Service]
+Restart=always
+RestartSec=3
+ExecStart=/bin/bash {path/of/dotfiles}/data/scripts/wifi_reconnect.sh
+ExecStop=/usr/bin/killall -s KILL wifi_reconnect
+
+
+[Install]
+WantedBy=multi-user.target
