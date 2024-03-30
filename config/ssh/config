@@ -1,0 +1,11 @@
+Host github
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/github_key
+    user wuqin
+
+Host aliyun
+    HostName 47.97.168.47
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/aliyun_key
+    user wuqin

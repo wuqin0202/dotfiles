@@ -108,6 +108,7 @@ findMatchingDir() {
     fi
     local directory="$proj_dir/config"
     local last_dir=$(basename $1)
+    [[ $last_dir == .* ]] && last_dir="${last_dir#.}"
     local matching_dir=$(find "$directory" -type d -name "$last_dir" -print -quit)
 
     echo $matching_dir
@@ -122,6 +123,12 @@ updateDir() {
             exit 1
         fi
         local config_dir_path=$(findMatchingDir $1)
+
+        if [ -z $config_dir_path ]; then
+            echo "未找到 $1 目录对应的配置目录！"
+            exit 1
+        fi
+
         if [ -e $1 ]; then
             echo -n "$1 目录已存在，是否覆盖？(y/[n])"
             read is_overwrite
@@ -147,6 +154,12 @@ updateFile() {
             exit 1
         fi
         local config_dir_path=$(findMatchingDir $1)
+
+        if [ -z $config_dir_path ]; then
+            echo "未找到 $1 目录对应的配置目录！"
+            exit 1
+        fi
+
         for file in $(ls $config_dir_path); do
             if [ -e $1/$file ]; then
                 echo -n "$1/$file 配置文件已存在，是否覆盖？(y/[n])"
@@ -179,6 +192,7 @@ updateAll() {
     updateDir $XDG_CONFIG_HOME/python
     updateDir $XDG_CONFIG_HOME/nvim
     updateDir $XDG_CONFIG_HOME/git
+    updateFile $HOME/.ssh
 
     [ -n $DISPLAY ] && has_gui="yes" # 有无 GUI
     [ -n $(uname -r | grep -i "wsl") ] && is_wsl="yes" # 是否为 WSL
@@ -210,8 +224,11 @@ case $1 in
     init)
         init
         ;;
-    update)
-        update $2
+    updateFile)
+        updateFile $2
+        ;;
+    updateDir)
+        updateDir $2
         ;;
     updateAll)
         updateAll
