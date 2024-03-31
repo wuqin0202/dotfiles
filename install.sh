@@ -134,11 +134,11 @@ updateDir() {
             read is_overwrite
             if [ "$is_overwrite" = "y" ]; then
                 saferm $1 $2
-                $2 cp -r config_dir_path $1
+                $2 cp -r $config_dir_path $1
             fi
         else
             echo "$1 目录不存在，创建···"
-            $2 cp -r config_dir_path $1
+            $2 cp -r $config_dir_path $1
         fi
     else
         echo "缺少参数，或者参数为空！"

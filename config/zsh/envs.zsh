@@ -62,7 +62,7 @@ export WGETRC=${XDG_CONFIG_HOME}/wget/wgetrc
 _ruby="$XDG_DATA_HOME/gem/ruby/3.0.0/bin"  # 加上 ruby 环境
 _local_bin="$HOME/.local/bin"
 _cuda_bin="/usr/local/cuda/bin"
-export PATH="$GOBIN:$_ruby:$_local_bin:$_local_bin:$_cuda_bin/myscript:$PATH"
+export PATH="$GOBIN:$_ruby:$_local_bin:$_cuda_bin:$PATH"
 unset _ruby _local_bin _cuda_bin
 
 # LD_LIBRARY_PATH
