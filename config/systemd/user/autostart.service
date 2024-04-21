@@ -1,0 +1,9 @@
+[Unit]
+Description=Autostart
+After=home.mount
+
+[Service]
+ExecStart=/bin/bash /home/wuqin/Workspace/Projects/dotfiles/data/scripts/autostart.sh
+
+[Install]
+WantedBy=default.target

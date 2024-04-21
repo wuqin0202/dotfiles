@@ -38,6 +38,7 @@ init() {
     mkdir -p ${XDG_DATA_HOME}/npm ${XDG_CACHE_HOME}/npm # npm 有关目录
     mkdir -p ${GOPATH} ${GOBIN} ${_JAVA_OPTIONS#*=} ${GNUPGHOME} ${CARGO_HOME} # 其他程序
     mkdir -p ${HOME}/.local/bin
+    mkdir -p ${XDG_CONFIG_HOME}/systemd/user
     if [ ! -e "$XDG_STATE_HOME/python/history" ]; then
         echo "创建 python 历史记录文件···"
         mkdir -p $XDG_STATE_HOME/python
