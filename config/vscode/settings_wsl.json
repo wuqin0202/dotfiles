@@ -4,7 +4,8 @@
     ],
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.cursorBlinking": "smooth",
-    "remote.autoForwardPortsFallback": 0
+    "remote.autoForwardPortsFallback": 0,
+    "maven.terminal.useJavaHome": true,
     // "vim.autoSwitchInputMethod.enable": true,
     // "vim.autoSwitchInputMethod.obtainIMCmd": "C:\\Users\\wuqin\\bin\\im-select.exe",
     // "vim.autoSwitchInputMethod.switchIMCmd": "C:\\Users\\wuqin\\bin\\im-select.exe {im}",
