@@ -1,11 +1,11 @@
 {
     "registry-mirrors": [
-        "https://registry.docker-cn.com",
-        "https://docker.mirrors.ustc.edu.cn",
-        "https://hub-mirror.c.163.com",
-        "https://dockerhub.azk8s.cn",
-        "https://reg-mirror.qiniu.com",
-        "https://mirror.ccs.tencentyun.com"
+        "https://dockerhub.icu",
+        "https://docker.chenby.cn",
+        "https://docker.1panel.live",
+        "https://docker.awsl9527.cn",
+        "https://docker.anyhub.us.kg",
+        "https://dhub.kubesre.xyz"
     ],
     "data-root": "/var/lib/docker",
     "runtimes": {
