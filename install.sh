@@ -28,7 +28,11 @@ init() {
     if [ -z $ZDOTDIR ]; then
         ZDOTDIR=$HOME/.config/zsh
         echo "写入 ZDOTDIR 环境变量···"
-        echo "export ZDOTDIR=$ZDOTDIR" | sudo tee -a /etc/zsh/zshenv > /dev/null
+        if [ $EUID -eq 0 ]; then
+            echo "export ZDOTDIR=$ZDOTDIR" >> /etc/zsh/zshenv
+        else
+            echo "export ZDOTDIR=$ZDOTDIR" | sudo tee -a /etc/zsh/zshenv > /dev/null
+        fi
     fi
 
     # 创建各环境变量的目录
@@ -209,8 +213,14 @@ updateAll() {
     # WSL 情况
 
     # 需要 root 权限情况
-    [ "$has_docker" = "yes" ] && updateFile /etc/docker sudo
-    updateFile /etc/systemd/system sudo
+    if [ $EUID -eq 0 ]; then
+        [ "$has_docker" = "yes" ] && updateFile /etc/docker
+        updateFile /etc/systemd/system
+    else
+        [ "$has_docker" = "yes" ] && updateFile /etc/docker sudo
+        updateFile /etc/systemd/system sudo
+    fi
+
     updateFile $XDG_CONFIG_HOME/systemd/user
 }
 
