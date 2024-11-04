@@ -67,5 +67,8 @@ unset _ruby _local_bin _cuda_bin
 
 # LD_LIBRARY_PATH
 _cuda_lib="/usr/local/cuda/lib64"
-export LD_LIBRARY_PATH=$_cuda_lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$_cuda_lib:${LD_LIBRARY_PATH}
 unset _cuda_lib
+
+# huggingface
+export HF_ENDPOINT=https://hf-mirror.com # huggingface 镜像
