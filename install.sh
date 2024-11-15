@@ -49,6 +49,12 @@ init() {
         touch $XDG_STATE_HOME/python/history
     fi
 
+    # aria2 配置
+    if [ ! -e $(pwd)/aria2 ]; then
+        echo "克隆 aria2 配置···"
+        git clone https://github.com/P3TERX/aria2.conf.git $(pwd)/aria2
+    fi
+
     # zsh 插件
     omz_plugin_path=$OMZ/custom/plugins
     if [ ! -e $omz_plugin_path/fzf-tab ]; then
