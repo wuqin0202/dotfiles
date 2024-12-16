@@ -3,7 +3,7 @@ Description=Autostart
 After=home.mount
 
 [Service]
-ExecStart=/bin/bash /home/wuqin/Workspace/Projects/dotfiles/data/scripts/autostart.sh
+ExecStart=/bin/bash /mnt/c/Users/13926/Desktop/Workspace/配置文件/dotfiles/data/scripts/autostart.sh
 
 [Install]
 WantedBy=default.target

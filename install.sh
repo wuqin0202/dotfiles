@@ -7,15 +7,32 @@ init() {
             echo -n "OMZ 已经存在，是否覆盖？(y/[n]) "
             read is_overwrite
             if [ "$is_overwrite" = "y" ]; then
-                saferm $OMZ
-                git clone https://github.com/ohmyzsh/ohmyzsh.git $OMZ
+                trash put $OMZ
+                git clone https://github.com/yaocccc/omz.git $OMZ
             fi
         else
-            git clone https://github.com/ohmyzsh/ohmyzsh.git $OMZ
+            git clone https://github.com/yaocccc/omz.git $OMZ
         fi
     else
         echo "OMZ 环境变量不存在！"
         exit 1
+    fi
+
+    # 若没有则创建 ZDOTDIR 变量
+    if [ -z $ZDOTDIR ]; then
+        ZDOTDIR=$HOME/.config/zsh
+        echo -n "是否对所有用户有效（需要root权限）？(y/[n]) "
+        read is_current_user
+        echo "写入 ZDOTDIR 环境变量···"
+        if [ "$is_current_user" = "y" ]; then
+            if [ $EUID -eq 0 ]; then
+                echo "export ZDOTDIR=$ZDOTDIR" >> /etc/zsh/zshenv
+            else
+                echo "export ZDOTDIR=$ZDOTDIR" | sudo tee -a /etc/zsh/zshenv > /dev/null
+            fi
+        else
+            echo "export ZDOTDIR=$ZDOTDIR" >> $HOME/.zshenv
+        fi
     fi
 
     # 替换 systemd 目录下所有 .service 文件中的 ExecStart 行中的 data/scripts 字段
@@ -23,17 +40,6 @@ init() {
         while IFS= read -r -d '' file; do
             sed -i "s|ExecStart=.*data/scripts|ExecStart=/bin/bash $proj_dir/data/scripts|g" "$file"
         done
-
-    # 若没有则创建 ZDOTDIR 变量
-    if [ -z $ZDOTDIR ]; then
-        ZDOTDIR=$HOME/.config/zsh
-        echo "写入 ZDOTDIR 环境变量···"
-        if [ $EUID -eq 0 ]; then
-            echo "export ZDOTDIR=$ZDOTDIR" >> /etc/zsh/zshenv
-        else
-            echo "export ZDOTDIR=$ZDOTDIR" | sudo tee -a /etc/zsh/zshenv > /dev/null
-        fi
-    fi
 
     # 创建各环境变量的目录
     mkdir -p ${XDG_CONFIG_HOME} ${XDG_CACHE_HOME} ${XDG_DATA_HOME} ${XDG_STATE_HOME} # 创建 XDG 目录
@@ -47,69 +53,6 @@ init() {
         echo "创建 python 历史记录文件···"
         mkdir -p $XDG_STATE_HOME/python
         touch $XDG_STATE_HOME/python/history
-    fi
-
-    # aria2 配置
-    if [ ! -e $(pwd)/aria2 ]; then
-        echo "克隆 aria2 配置···"
-        git clone https://github.com/P3TERX/aria2.conf.git $(pwd)/aria2
-    fi
-
-    # zsh 插件
-    omz_plugin_path=$OMZ/custom/plugins
-    if [ ! -e $omz_plugin_path/fzf-tab ]; then
-        echo "克隆 fzf-tab 插件···"
-        git clone https://github.com/Aloxaf/fzf-tab $omz_plugin_path/fzf-tab
-    fi
-    if [ ! -e $omz_plugin_path/z.lua ]; then
-        echo "克隆 z.lua 插件···"
-        git clone https://github.com/skywind3000/z.lua.git $omz_plugin_path/z.lua
-    fi
-    if [ ! -e $omz_plugin_path/zsh-autosuggestions ]; then
-        echo "克隆 zsh-autosuggestions 插件···"
-        git clone https://github.com/zsh-users/zsh-autosuggestions $omz_plugin_path/zsh-autosuggestions
-    fi
-    if [ ! -e $omz_plugin_path/zsh-completions ]; then
-        echo "克隆 zsh-completions 插件···"
-        git clone https://github.com/zsh-users/zsh-completions $omz_plugin_path/zsh-completions
-    fi
-    if [ ! -e $omz_plugin_path/zsh-history-substring-search ]; then
-        echo "克隆 zsh-history-substring-search 插件···"
-        git clone https://github.com/zsh-users/zsh-history-substring-search $omz_plugin_path/zsh-history-substring-search
-    fi
-    if [ ! -e $omz_plugin_path/zsh-syntax-highlighting ]; then
-        echo "克隆 zsh-syntax-highlighting 插件···"
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $omz_plugin_path/zsh-syntax-highlighting
-    fi
-    if [ ! -e $omz_plugin_path/conda-zsh-completion ]; then
-        echo "克隆 conda-zsh-completion"
-        git clone https://github.com/conda-incubator/conda-zsh-completion.git $omz_plugin_path/conda-zsh-completion
-    fi
-
-    # zsh 主题
-    omz_plugin_path=$OMZ/custom/themes
-    if [ ! -e $omz_plugin_path/powerlevel10k ]; then
-        echo "克隆 powerlevel10k 主题···"
-        git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git $omz_plugin_path/powerlevel10k
-    fi
-}
-
-saferm() {
-    if [ ! -z $2 ] && [ "$2" != "sudo" ]; then
-        echo "第二个参数只能为 sudo，不能为 $2"
-        exit 1
-    fi
-
-    backup_dir=$HOME/Backups
-
-    if [ ! -e $backup_dir ]; then
-        echo "创建备份目录···"
-        mkdir $backup_dir
-    fi
-
-    if [ -e $1 ]; then
-        echo "备份 $1···"
-        $2 mv -i $1 $backup_dir
     fi
 }
 
@@ -145,7 +88,7 @@ updateDir() {
             echo -n "$1 目录已存在，是否覆盖？(y/[n])"
             read is_overwrite
             if [ "$is_overwrite" = "y" ]; then
-                saferm $1 $2
+                trash put $1 $2
                 $2 cp -r $config_dir_path $1
             fi
         else
@@ -177,7 +120,7 @@ updateFile() {
                 echo -n "$1/$file 配置文件已存在，是否覆盖？(y/[n])"
                 read is_overwrite
                 if [ "$is_overwrite" = "y" ]; then
-                    saferm $1/$file $2
+                    trash put $1/$file $2
                     $2 cp $config_dir_path/$file $1/$file
                 fi
             else

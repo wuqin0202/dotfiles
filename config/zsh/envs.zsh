@@ -16,7 +16,7 @@ export TERMINFO=/usr/share/terminfo # 解决 conda环境下 clear 报错
 # zsh
 export HISTFILE=${XDG_STATE_HOME}/zsh/zsh_history # zsh 历史命令记录
 export _ZL_DATA=${XDG_STATE_HOME}/zsh/zlua # zlua 数据文件
-export OMZ=${XDG_DATA_HOME}/ohmyzsh # oh-my-zsh 目录
+export OMZ=${XDG_DATA_HOME}/omz # oh-my-zsh 目录
 
 # go
 export GOPATH=${XDG_DATA_HOME}/go # go get 下载的包的位置

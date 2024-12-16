@@ -1,8 +1,11 @@
 ## 安装步骤
+参考 <https://github.com/yaocccc/omz/tree/master>
 1. 依赖安装
     ```bash
-    # archlinux 系统
-    sudo pacman -S lua fzf
+    # 安装 fzf
+    https://github.com/junegunn/fzf
+    # 安装 lua
+    https://github.com/lua/lua
     ```
 2. 克隆仓库
     ```bash
