@@ -3,6 +3,6 @@ source $ZDOTDIR/aliases.zsh
 source $ZDOTDIR/proxy.zsh
 source $ZDOTDIR/autostart.zsh
 source $ZDOTDIR/fzf.zsh
-source $OMZ/omz.zsh
+source $ZDOTDIR/omz.zsh
 
 bindkey '^U' backward-kill-line # Ctrl+U 删除光标之前的所有字符
