@@ -6,6 +6,9 @@
     https://github.com/junegunn/fzf
     # 安装 lua
     https://github.com/lua/lua
+    # 安装 trashy
+    https://github.com/oberblastmeister/trashy
+    # 安装 zsh
     ```
 2. 克隆仓库
     ```bash
@@ -15,6 +18,6 @@
     ```
 3. 开始安装
     ```bash
-    ./install.sh
     chsh -s $(which zsh)
+    ./install.sh
     ```

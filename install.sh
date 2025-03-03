@@ -83,13 +83,13 @@ init_dirs() {
     mkdir -p ${XDG_DATA_HOME}/npm ${XDG_CACHE_HOME}/npm # npm 有关目录
     mkdir -p ${GOPATH} ${GOBIN} ${_JAVA_OPTIONS#*=} ${GNUPGHOME} ${CARGO_HOME} # 其他程序
     mkdir -p ${HOME}/.local/bin
+    mkdir -p ${HOME}/.ssh
     mkdir -p ${XDG_CONFIG_HOME}/systemd/user
     if [ ! -e "$XDG_STATE_HOME/python/history" ]; then
         echo "创建 python 历史记录文件···"
         mkdir -p $XDG_STATE_HOME/python
         touch $XDG_STATE_HOME/python/history
     fi
-
 }
 
 init() {
@@ -233,6 +233,10 @@ updateAll() {
             updateFile /etc/docker sudo
         fi
     fi
+
+    # 安装 data/scripts 目录下的脚本
+    cp data/scripts/file_preview.sh ${HOME}/.local/bin
+
 }
 
 proj_dir=$(pwd)
