@@ -5,7 +5,7 @@ After=network-online.target
 [Service]
 Restart=always
 RestartSec=3
-ExecStart=/bin/bash {/path/to/dotfiles}/data/scripts/wifi_reconnect.sh
+ExecStart=/bin/bash wifi_reconnect.sh
 ExecStop=/usr/bin/killall -s KILL wifi_reconnect
 
 

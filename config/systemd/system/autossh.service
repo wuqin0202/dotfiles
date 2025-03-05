@@ -5,7 +5,7 @@ After=network-online.target home.mount
 [Service]
 User=wuqin
 Type=oneshot
-ExecStart=/bin/bash {/path/to/dotfiles}/data/scripts/autossh.sh
+ExecStart=/bin/bash autossh.sh
 ExecStop=/usr/bin/killall -s KILL autossh
 RemainAfterExit=yes
 

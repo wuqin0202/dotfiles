@@ -3,7 +3,7 @@ Description=Autostart
 After=home.mount
 
 [Service]
-ExecStart=/bin/bash {/path/to/dotfiles}/data/scripts/autostart.sh
+ExecStart=/bin/bash autostart.sh
 
 [Install]
 WantedBy=default.target

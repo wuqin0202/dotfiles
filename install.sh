@@ -5,9 +5,8 @@ init_zsh() {
     omz_git_url="https://github.com/ohmyzsh/ohmyzsh.git"
     if [ -n $OMZ ]; then
         if [ -e $OMZ ]; then
-            echo -n "OMZ 已经存在，是否覆盖？(y/[n]) "
-            read is_overwrite
-            if [ "$is_overwrite" = "y" ]; then
+            read -p "OMZ 已经存在，是否覆盖？(y/[n]) ：" answer
+            if [ "$answer" = "y" ]; then
                 trash put $OMZ
                 git clone $omz_git_url $OMZ
             fi
@@ -22,16 +21,16 @@ init_zsh() {
     # 创建 ZDOTDIR 变量指定 zsh 配置配件路径
     if [ -z $ZDOTDIR ]; then
         ZDOTDIR=$HOME/.config/zsh
-        echo -n "是否对所有用户有效（需要root权限）？(y/[n]) "
-        read is_all_user
-        echo "写入 ZDOTDIR 环境变量···"
-        if [ "$is_all_user" = "y" ]; then
+        read -p "是否对所有用户有效（需要root权限）？(y/[n])：" answer
+        if [ "$answer" = "y" ]; then
+            echo "写入 ZDOTDIR 环境变量到 /etc/zsh/zshenv···"
             if [ $EUID -eq 0 ]; then
                 echo "export ZDOTDIR=$ZDOTDIR" >> /etc/zsh/zshenv
             else
                 echo "export ZDOTDIR=$ZDOTDIR" | sudo tee -a /etc/zsh/zshenv > /dev/null
             fi
         else
+            echo "写入 ZDOTDIR 环境变量到 $HOME/.zshenv···"
             echo "export ZDOTDIR=$ZDOTDIR" >> $HOME/.zshenv
         fi
     fi
@@ -82,8 +81,7 @@ init_dirs() {
     mkdir -p ${HISTFILE%/*} ${_ZL_DATA%/*} # zsh 有关目录
     mkdir -p ${XDG_DATA_HOME}/npm ${XDG_CACHE_HOME}/npm # npm 有关目录
     mkdir -p ${GOPATH} ${GOBIN} ${_JAVA_OPTIONS#*=} ${GNUPGHOME} ${CARGO_HOME} # 其他程序
-    mkdir -p ${HOME}/.local/bin
-    mkdir -p ${HOME}/.ssh
+    mkdir -p ${HOME}/.local/bin # 存放 scripts 脚本
     mkdir -p ${XDG_CONFIG_HOME}/systemd/user
     if [ ! -e "$XDG_STATE_HOME/python/history" ]; then
         echo "创建 python 历史记录文件···"
@@ -131,9 +129,8 @@ updateDir() {
         fi
 
         if [ -e $1 ]; then
-            echo -n "$1 目录已存在，是否覆盖？(y/[n])"
-            read is_overwrite
-            if [ "$is_overwrite" = "y" ]; then
+            read -p "$1 目录已存在，是否覆盖？(y/[n])：" answer
+            if [ "$answer" = "y" ]; then
                 trash put $1 $2
                 $2 cp -r $config_dir_path $1
             fi
@@ -165,9 +162,8 @@ updateFile() {
 
         for file in $(ls $config_dir_path); do
             if [ -e $1/$file ]; then
-                echo -n "$1/$file 配置文件已存在，是否覆盖？(y/[n])"
-                read is_overwrite
-                if [ "$is_overwrite" = "y" ]; then
+                read -p "$1/$file 配置文件已存在，是否覆盖？(y/[n])：" answer
+                if [ "$answer" = "y" ]; then
                     trash put $1/$file $2
                     $2 cp $config_dir_path/$file $1/$file
                 fi
@@ -195,7 +191,6 @@ updateAll() {
     updateDir $XDG_CONFIG_HOME/python
     updateDir $XDG_CONFIG_HOME/nvim
     updateDir $XDG_CONFIG_HOME/git
-    updateFile $HOME/.ssh
 
     [ -n $DISPLAY ] && has_gui="yes" # 有无 GUI
     [ -n $(uname -r | grep -i "wsl") ] && is_wsl="yes" # 是否为 WSL
@@ -210,20 +205,26 @@ updateAll() {
     # WSL 情况
 
     # systemd 服务安装
-    # 替换 systemd 目录下所有 .service 文件中的 ExecStart 行中的 data/scripts 字段
-    mapfile -t service_files < <(find "$dir" -type f -name "*.service")
-    for file in "${service_files[@]}"; do
-        sed -i "s|ExecStart=.*data/scripts|ExecStart=/bin/bash $proj_dir/data/scripts|g" "$file"
-    done
-    if [ $EUID -eq 0 ]; then
-        updateFile /etc/systemd/system
-    else
-        updateFile /etc/systemd/system sudo
+    read -p "是否安装 systemd 系统服务？(y/[n]) ：" answer
+    if [ "$answer" = "y" ]; then
+        # 替换 systemd 目录下所有 .service 文件中的 ExecStart 行中的 data/scripts 字段
+        mapfile -t service_files < <(find "$dir" -type f -name "*.service")
+        for file in "${service_files[@]}"; do
+            sed -i "s|ExecStart=.*data/scripts|ExecStart=/bin/bash $proj_dir/data/scripts|g" "$file"
+        done
+        if [ $EUID -eq 0 ]; then
+            updateFile /etc/systemd/system
+        else
+            updateFile /etc/systemd/system sudo
+        fi
     fi
-    updateFile $XDG_CONFIG_HOME/systemd/user
-    for file in "${service_files[@]}"; do
-        sed -i "s|ExecStart=.*data/scripts|ExecStart=/bin/bash {/path/to/dotfiles}/data/scripts|g" "$file"
-    done
+    read -p "是否安装 systemd 用户服务？(y/[n]) ：" answer
+    if [ "$answer" = "y" ]; then
+        updateFile $XDG_CONFIG_HOME/systemd/user
+        for file in "${service_files[@]}"; do
+            sed -i "s|ExecStart=.*data/scripts|ExecStart=/bin/bash {/path/to/dotfiles}/data/scripts|g" "$file"
+        done
+    fi
 
     # docker 配置文件安装
     if [ "$has_docker" = "yes" ]; then
@@ -235,8 +236,7 @@ updateAll() {
     fi
 
     # 安装 data/scripts 目录下的脚本
-    cp data/scripts/file_preview.sh ${HOME}/.local/bin
-
+    cp data/scripts/*.sh ${HOME}/.local/bin
 }
 
 proj_dir=$(pwd)
