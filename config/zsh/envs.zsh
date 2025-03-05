@@ -39,6 +39,9 @@ export NPM_CONFIG_USERCONFIG=${XDG_CONFIG_HOME}/npm/npm.conf
 
 # cuda
 export CUDA_CACHE_PATH=${XDG_CACHE_HOME}/nv
+export CUDA_PATH=/usr/local/cuda
+export CUDA_HOME=/usr/local/cuda
+export CUDNN_PATH=/usr/local/cuda/include
 
 # python
 export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python

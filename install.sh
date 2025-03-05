@@ -5,7 +5,8 @@ init_zsh() {
     omz_git_url="https://github.com/ohmyzsh/ohmyzsh.git"
     if [ -n $OMZ ]; then
         if [ -e $OMZ ]; then
-            read -p "OMZ 已经存在，是否覆盖？(y/[n]) ：" answer
+            echo -n "OMZ 已经存在，是否覆盖？(y/[n]) ："
+            read answer
             if [ "$answer" = "y" ]; then
                 trash put $OMZ
                 git clone $omz_git_url $OMZ
@@ -21,7 +22,8 @@ init_zsh() {
     # 创建 ZDOTDIR 变量指定 zsh 配置配件路径
     if [ -z $ZDOTDIR ]; then
         ZDOTDIR=$HOME/.config/zsh
-        read -p "是否对所有用户有效（需要root权限）？(y/[n])：" answer
+        echo -n "是否对所有用户有效（需要root权限）？(y/[n])："
+        read answer
         if [ "$answer" = "y" ]; then
             echo "写入 ZDOTDIR 环境变量到 /etc/zsh/zshenv···"
             if [ $EUID -eq 0 ]; then
@@ -129,7 +131,8 @@ updateDir() {
         fi
 
         if [ -e $1 ]; then
-            read -p "$1 目录已存在，是否覆盖？(y/[n])：" answer
+            echo -n "$1 目录已存在，是否覆盖？(y/[n])："
+            read answer
             if [ "$answer" = "y" ]; then
                 trash put $1 $2
                 $2 cp -r $config_dir_path $1
@@ -162,7 +165,8 @@ updateFile() {
 
         for file in $(ls $config_dir_path); do
             if [ -e $1/$file ]; then
-                read -p "$1/$file 配置文件已存在，是否覆盖？(y/[n])：" answer
+                echo -n "$1/$file 配置文件已存在，是否覆盖？(y/[n])："
+                read answer
                 if [ "$answer" = "y" ]; then
                     trash put $1/$file $2
                     $2 cp $config_dir_path/$file $1/$file
@@ -205,7 +209,8 @@ updateAll() {
     # WSL 情况
 
     # systemd 服务安装
-    read -p "是否安装 systemd 系统服务？(y/[n]) ：" answer
+    echo -n "是否安装 systemd 系统服务？(y/[n]) ："
+    read answer
     if [ "$answer" = "y" ]; then
         # 替换 systemd 目录下所有 .service 文件中的 ExecStart 行中的 data/scripts 字段
         mapfile -t service_files < <(find "$dir" -type f -name "*.service")
@@ -218,7 +223,8 @@ updateAll() {
             updateFile /etc/systemd/system sudo
         fi
     fi
-    read -p "是否安装 systemd 用户服务？(y/[n]) ：" answer
+    echo -n "是否安装 systemd 用户服务？(y/[n]) ："
+    read answer
     if [ "$answer" = "y" ]; then
         updateFile $XDG_CONFIG_HOME/systemd/user
         for file in "${service_files[@]}"; do
