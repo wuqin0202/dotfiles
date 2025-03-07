@@ -8,7 +8,7 @@ init_zsh() {
             echo -n "OMZ 已经存在，是否覆盖？(y/[n]) ："
             read answer
             if [ "$answer" = "y" ]; then
-                trash put $OMZ
+                trash $OMZ
                 git clone $omz_git_url $OMZ
             fi
         else
@@ -134,7 +134,7 @@ updateDir() {
             echo -n "$1 目录已存在，是否覆盖？(y/[n])："
             read answer
             if [ "$answer" = "y" ]; then
-                trash put $1 $2
+                trash $1 $2
                 $2 cp -r $config_dir_path $1
             fi
         else
@@ -168,7 +168,7 @@ updateFile() {
                 echo -n "$1/$file 配置文件已存在，是否覆盖？(y/[n])："
                 read answer
                 if [ "$answer" = "y" ]; then
-                    trash put $1/$file $2
+                    trash $1/$file $2
                     $2 cp $config_dir_path/$file $1/$file
                 fi
             else

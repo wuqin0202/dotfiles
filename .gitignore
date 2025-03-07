@@ -1,3 +1,4 @@
 .zcompdump*
 test.sh
 packer_compiled.lua
+._*

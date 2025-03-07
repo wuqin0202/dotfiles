@@ -1,15 +1,11 @@
 ## 安装步骤
-参考 <https://github.com/yaocccc/omz/tree/master>
 1. 依赖安装
-    ```bash
-    # 安装 fzf
-    https://github.com/junegunn/fzf
-    # 安装 lua
-    https://github.com/lua/lua
-    # 安装 trashy
-    https://github.com/oberblastmeister/trashy
-    # 安装 zsh
-    ```
+   * 安装 fzf
+     <https://github.com/junegunn/fzf>
+   * 安装 lua
+     <https://github.com/lua/lua>
+   * 安装 trash
+   * 安装 zsh
 2. 克隆仓库
     ```bash
     # 克隆本仓库
